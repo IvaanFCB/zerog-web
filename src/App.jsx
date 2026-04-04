@@ -6,6 +6,7 @@ const KITS_DATA = {
     name: 'Bronce VIP',
     price: '4.99',
     originalPrice: '9.99',
+    checkoutUrl: 'https://zero-g.tebex.io',
     benefits: [
        { title: 'Multiplicador Monedas', value: 'x1.5', icon: '📈' },
        { title: 'Saltar Cola (Queue)', value: 'No Disponible', icon: '👤' },
@@ -28,6 +29,7 @@ const KITS_DATA = {
     name: 'Plata VIP',
     price: '12.49',
     originalPrice: '24.99',
+    checkoutUrl: 'https://zero-g.tebex.io',
     benefits: [
        { title: 'Multiplicador Monedas', value: 'x2.0', icon: '📈' },
        { title: 'Saltar Cola (Queue)', value: 'Activado', icon: '👥' },
@@ -52,6 +54,7 @@ const KITS_DATA = {
     name: 'Oro VIP',
     price: '24.99',
     originalPrice: '49.99',
+    checkoutUrl: 'https://zero-g.tebex.io',
     benefits: [
        { title: 'Multiplicador Monedas', value: 'x3.0', icon: '📈' },
        { title: 'Saltar Cola (VIP+)', value: 'Prioridad Élite', icon: '👥' },
@@ -100,8 +103,12 @@ function KitModal({ kitId, onClose }) {
               <span className="benefit-icon">{b.icon}</span>
               <div className="benefit-info">
                 <span className="b-title">{b.title}</span>
-                <span className={b.value.includes('No ') ? 'b-value red' : 'b-value green'}>{b.value}</span>
-                <div className="b-included">✓ Incluido</div>
+                <span className={b.value.includes('No') ? 'b-value red' : 'b-value green'}>{b.value}</span>
+                {b.value.includes('No') ? (
+                  <div className="b-included red">✘ No Incluido</div>
+                ) : (
+                  <div className="b-included">✓ Incluido</div>
+                )}
               </div>
             </div>
           ))}
@@ -131,7 +138,7 @@ function KitModal({ kitId, onClose }) {
             <span className="price-label">Precio total</span>
             <span className="new-price">{kit.price}€ <small className="old-price-modal">{kit.originalPrice}€</small></span>
           </div>
-          <a href="https://tebex.io" target="_blank" rel="noreferrer" className="btn-add-cart">añadir a la cesta</a>
+          <a href={kit.checkoutUrl} target="_blank" rel="noreferrer" className="btn-add-cart">ver en tienda oficial</a>
         </div>
       </div>
     </div>
@@ -174,9 +181,19 @@ function Home({ setView }) {
               </svg>
               {copied ? 'IP COPIADA AL PORTAPAPELES' : 'COPIAR IP PARA JUGAR'}
             </button>
-            <button onClick={() => setView('store')} className="btn btn-secondary">
+            <button className="btn btn-secondary" onClick={() => setView('store')}>
               🛒 ACCEDER A LA TIENDA VIP
             </button>
+          </div>
+          
+          <div className="battlemetrics-banner" style={{ marginTop: '2.5rem', display: 'flex', justifyContent: 'center' }}>
+            <a href="https://www.battlemetrics.com/servers/rust/38527120" target="_blank" rel="noreferrer" style={{ transition: 'transform 0.2s ease', display: 'inline-block' }} onMouseOver={e => e.currentTarget.style.transform = 'scale(1.02)'} onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}>
+               <img 
+                 src="https://cdn.battlemetrics.com/b/horizontal500x80px/38527120.png?foreground=%23EEEEEE&background=%23222222&lines=%23333333&linkColor=%231185ec&chartColor=%23FF0700" 
+                 alt="BattleMetrics Server Status" 
+                 style={{ borderRadius: '8px', boxShadow: '0 8px 30px rgba(0,0,0,0.6)', border: '1px solid rgba(255,255,255,0.1)', maxWidth: '100%', height: 'auto' }} 
+               />
+            </a>
           </div>
         </div>
       </section>
